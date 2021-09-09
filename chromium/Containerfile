@@ -1,0 +1,37 @@
+FROM docker.io/library/archlinux:latest
+LABEL maintainer "djds djds@bghost.xyz"
+
+RUN pacman-key --init \
+    && pacman -Syu --noconfirm \
+    && pacman -S --noconfirm \
+        chromium \
+        noto-fonts \
+        noto-fonts-cjk \
+        noto-fonts-emoji \
+        mesa \
+        vulkan-intel \
+        libva-mesa-driver \
+    && pacman -Scc --noconfirm
+
+ARG GID
+ARG PLUGDEV
+ARG ID
+ARG AUDIO
+ARG USERNAME="chromium"
+
+RUN groupadd -g "${GID}" "${USERNAME}" \
+    && groupadd -g "${PLUGDEV}" plugdev \
+    && groupmod -g "${AUDIO}" audio \
+    && useradd -m -G audio,video,plugdev -u "${ID}" -g "${GID}" "${USERNAME}" \
+    && install -m 0700 -d "/home/${USERNAME}/Downloads" \
+    && install -m 0700 -d "/home/${USERNAME}/data" \
+    && chown -R "${USERNAME}:${USERNAME}" "/home/${USERNAME}"
+
+VOLUME ["/home/${USERNAME}/downloads", "/home/${USERNAME}/data"]
+
+WORKDIR "/home/${USERNAME}"
+
+# Run as non privileged user
+USER "${USERNAME}"
+
+ENTRYPOINT ["/usr/bin/chromium"]
