@@ -45,12 +45,12 @@ chromium() {
         --net=host \
         --security-opt=no-new-privileges \
         --security-opt=seccomp="${HOME}/.config/containers/chrome.json" \
-        --volume="${HOME}/.config/chromium:/home/chromium/.config/chromium" \
-        --volume="${HOME}/.config/pulse:/home/chromium/.config/pulse" \
-        --volume="${HOME}/.pki:/home/chromium/.pki" \
-        --volume="${downloads}:/home/chromium/Downloads" \
-        --volume="/run/user/${UID}/pulse/native:${pulse_socket}" \
-        --volume='/dev/shm:/dev/shm' \
+        --volume="${HOME}/.config/chromium:/home/chromium/.config/chromium:rw" \
+        --volume="${HOME}/.config/pulse:/home/chromium/.config/pulse:rw" \
+        --volume="${HOME}/.pki:/home/chromium/.pki:rw" \
+        --volume="${downloads}:/home/chromium/Downloads:rw" \
+        --volume="/run/user/${UID}/pulse/native:${pulse_socket}:rw" \
+        --volume='/dev/shm:/dev/shm:rw' \
         --volume='/etc/hosts:/etc/hosts:ro' \
         --volume='/etc/localtime:/etc/localtime:ro' \
         --volume='/etc/resolv.conf:/etc/resolv.conf:ro' \
