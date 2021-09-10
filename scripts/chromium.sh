@@ -40,7 +40,7 @@ chromium() {
         --cap-drop=ALL \
         --env="DISPLAY=unix${DISPLAY}" \
         --env='FONTCONFIG_PATH=/etc/fonts' \
-        --env="PUSLE_SERVER=unix:${pulse_socket}" \
+        --env="PULSE_SERVER=unix:${pulse_socket}" \
         --group-add=keep-groups \
         --net=host \
         --security-opt=no-new-privileges \
