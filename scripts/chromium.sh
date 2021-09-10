@@ -39,7 +39,7 @@ chromium() {
     podman --runtime=/usr/bin/crun run --rm -it \
         --cap-drop=ALL \
         --env="DISPLAY=unix${DISPLAY}" \
-        --env='FONTCONFIG_PATH=/etc/fonts/fonts.conf' \
+        --env='FONTCONFIG_PATH=/etc/fonts' \
         --env="PUSLE_SERVER=unix:${pulse_socket}" \
         --group-add=keep-groups \
         --net=host \
