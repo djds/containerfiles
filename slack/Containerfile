@@ -1,0 +1,72 @@
+FROM docker.io/library/ubuntu:hirsute
+LABEL maintainer "djds djds@bghost.xyz"
+
+WORKDIR /setup
+
+ENV DEBIAN_FRONTEND="noninteractive"
+
+RUN apt-get update \
+    && apt-get dist-upgrade -y \
+    && apt-get install -y --no-install-recommends \
+        ca-certificates \
+        debsig-verify \
+        fonts-noto-cjk \
+        fonts-noto-color-emoji \
+        gnupg \
+        libappindicator3-1 \
+        libasound2 \
+        libgl1-mesa-dri \
+        libgl1-mesa-glx \
+        libgtk-3-0 \
+        libx11-xcb1 \
+        libxkbfile1 \
+        wget
+
+ARG SLACK_POLICY="F18462078E6C9578"
+ARG SLACK_PUBKEY="slack_pubkey_2019.gpg"
+ARG SLACK_VERSION="4.19.2"
+
+RUN mkdir -p \
+        "/usr/share/debsig/keyrings/${SLACK_POLICY}" \
+        "/etc/debsig/policies/${SLACK_POLICY}"
+
+COPY slack.pol "/etc/debsig/policies/${SLACK_POLICY}/slack.pol"
+
+# https://superuser.com/questions/1504081/no-valid-openpgp-data-found-when-trying-to-verify-signature-of-deb-package-with
+RUN wget "https://slack.com/gpg/${SLACK_PUBKEY}" \
+    && touch "/usr/share/debsig/keyrings/${SLACK_POLICY}/debsig.gpg" \
+    && gpg \
+            --no-default-keyring \
+            --keyring "/usr/share/debsig/keyrings/${SLACK_POLICY}/debsig.gpg" \
+            --import "${SLACK_PUBKEY}" \
+    && wget "https://downloads.slack-edge.com/linux_releases/slack-desktop-${SLACK_VERSION}-amd64.deb" \
+    && debsig-verify "./slack-desktop-${SLACK_VERSION}-amd64.deb" \
+    && apt-get update \
+    && apt-get install -y "./slack-desktop-${SLACK_VERSION}-amd64.deb" \
+    && apt-get install -y --fix-broken
+
+ARG GID
+ARG PLUGDEV
+ARG ID
+ARG AUDIO
+ARG USERNAME="slack"
+    
+RUN groupadd -g "${GID}" "${USERNAME}" \
+    && groupmod -g "${PLUGDEV}" plugdev \
+    && groupmod -g "${AUDIO}" audio \
+    && useradd -m -G audio,video -u "${ID}" -g "${GID}" "${USERNAME}" \
+    && mkdir -p \
+        "/home/${USERNAME}/Downloads" \
+        "/home/${USERNAME}/.config/pulse" \
+    && chown -R "${USERNAME}:${USERNAME}" "/home/${USERNAME}" \
+    && rm -rf /var/lib/apt/lists/* /setup
+
+WORKDIR "/home/${USERNAME}"
+
+# Run as non privileged user
+USER "${USERNAME}"
+
+ENTRYPOINT ["/usr/lib/slack/slack"]
+CMD ["--rxlogging", "--loglevel", "debug"]
+
+# vim:ft=dockerfile

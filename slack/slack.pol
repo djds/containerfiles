@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!DOCTYPE Policy SYSTEM "https://www.debian.org/debsig/1.0/policy.dtd">
+<Policy xmlns="https://www.debian.org/debsig/1.0/">
+  <Origin Name="Slack" id="F18462078E6C9578" Description="Slack"/>
+  <Selection>
+    <Required Type="origin" File="debsig.gpg" id="F18462078E6C9578"/>
+  </Selection>
+  <Verification>
+    <Required Type="origin" File="debsig.gpg" id="F18462078E6C9578"/>
+  </Verification>
+</Policy>

@@ -1,15 +1,24 @@
-.PHONY: build.* chromium
+.PHONY: build.* chromium slack
 
-REGISTRY := ghcr.io/djds
-CHROMIUM := $(REGISTRY)/chromium:arch
+REGISTRY      := ghcr.io/djds
+CHROMIUM      := $(REGISTRY)/chromium:arch
+SLACK_VERSION := 4.19.2
+SLACK         := $(REGISTRY)/slack:$(SLACK_VERSION)
+
+BUILD_ARGS    := \
+	--build-arg=AUDIO="$(shell getent group audio | cut -d ':' -f 3)" \
+	--build-arg=GID="$(shell id -g)" \
+	--build-arg=ID="$(shell id -u)" \
+	--build-arg=PLUGDEV="$(shell getent group plugdev | cut -d ':' -f 3)"
 
 chromium: build.chromium
 	./scripts/chromium.sh
 
 build.chromium:
-	podman build \
-		--build-arg=GID="$(shell id -g)" \
-		--build-arg=PLUGDEV="$(shell getent group plugdev | cut -d ':' -f 3)" \
-		--build-arg=ID="$(shell id -u)" \
-		--build-arg=AUDIO="$(shell getent group audio | cut -d ':' -f 3)" \
-		--tag=$(CHROMIUM) ./chromium
+	podman build $(BUILD_ARGS) --tag=$(CHROMIUM) ./chromium
+
+slack: build.slack
+	./scripts/slack.sh
+
+build.slack:
+	podman build $(BUILD_ARGS) --tag=$(SLACK) ./slack
