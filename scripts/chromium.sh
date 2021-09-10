@@ -12,7 +12,7 @@ readonly CONTAINER_IMAGE='ghcr.io/djds/chromium:arch'
 readonly PODMAN_UID='65536'  # id of `chromium` user in rootless container
 
 restore_permissions() {
-     "${SUDO}" chown -R "$(id -u):$(id -g)" "${CONFIG_DIRS[@]}"
+    "${SUDO}" chown -R "$(id -u):$(id -g)" "${CONFIG_DIRS[@]}"
 }
 
 chromium() { 
@@ -37,7 +37,7 @@ chromium() {
 
     # shellcheck disable=SC2046
     podman --runtime=/usr/bin/crun run --rm -it \
-        --cap-drop=ALL \
+        --cap-drop=all \
         --env="DISPLAY=unix${DISPLAY}" \
         --env='FONTCONFIG_PATH=/etc/fonts' \
         --env="PULSE_SERVER=unix:${pulse_socket}" \
@@ -54,7 +54,8 @@ chromium() {
         --volume='/etc/hosts:/etc/hosts:ro' \
         --volume='/etc/localtime:/etc/localtime:ro' \
         --volume='/etc/resolv.conf:/etc/resolv.conf:ro' \
-        --volume='/tmp/.X11-unix:/tmp/.X11-unix:ro' $(
+        --volume='/tmp/.X11-unix:/tmp/.X11-unix:ro' \
+        $(
             for device in "${devices[@]}"; do
                 if ls "${device}" >/dev/null; then
                     printf -- '--device=%s ' "${device}"
