@@ -30,7 +30,7 @@ chromium() {
         devices+=("${i}")
     done
 
-    podman unshare install -m 0700 -o "$(id -u)" -g "$(id -g)" -d "${downloads}"
+    podman unshare install -m 0755 -o "$(id -u)" -g "$(id -g)" -d "${downloads}"
     podman unshare chown -R "$(id -u):$(id -g)" "${CONFIG_DIRS[@]}"
 
     xhost "local:${PODMAN_UID}"
