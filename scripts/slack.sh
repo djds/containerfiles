@@ -56,7 +56,7 @@ slack() {
                 fi
             done
         ) \
-        --name slack \
+        --name=slack \
         "${CONTAINER_IMAGE}"
 }
 
