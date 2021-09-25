@@ -6,7 +6,6 @@ readonly SUDO='/usr/bin/sudo'
 readonly CONFIG_DIRS=(
     "${HOME}/.config/chromium"
     "${HOME}/.config/pulse"
-    "${HOME}/.pki"
 )
 readonly CONTAINER_IMAGE='ghcr.io/djds/chromium:arch'
 readonly PODMAN_UID='65536'  # id of `chromium` user in rootless container
