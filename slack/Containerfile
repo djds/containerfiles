@@ -24,7 +24,7 @@ RUN apt-get update \
 
 ARG SLACK_POLICY="F18462078E6C9578"
 ARG SLACK_PUBKEY="slack_pubkey_2019.gpg"
-ARG SLACK_VERSION="4.19.2"
+ARG SLACK_VERSION="4.20.0"
 
 RUN mkdir -p \
         "/usr/share/debsig/keyrings/${SLACK_POLICY}" \
@@ -39,7 +39,8 @@ RUN wget "https://slack.com/gpg/${SLACK_PUBKEY}" \
             --no-default-keyring \
             --keyring "/usr/share/debsig/keyrings/${SLACK_POLICY}/debsig.gpg" \
             --import "${SLACK_PUBKEY}" \
-    && wget "https://downloads.slack-edge.com/linux_releases/slack-desktop-${SLACK_VERSION}-amd64.deb" \
+    && wget \
+        "https://downloads.slack-edge.com/releases/linux/${SLACK_VERSION}/prod/x64/slack-desktop-${SLACK_VERSION}-amd64.deb" \
     && debsig-verify "./slack-desktop-${SLACK_VERSION}-amd64.deb" \
     && apt-get update \
     && apt-get install -y "./slack-desktop-${SLACK_VERSION}-amd64.deb" \

@@ -2,7 +2,7 @@
 
 REGISTRY      := ghcr.io/djds
 CHROMIUM      := $(REGISTRY)/chromium:arch
-SLACK_VERSION := 4.19.2
+SLACK_VERSION := 4.20.0
 SLACK         := $(REGISTRY)/slack:$(SLACK_VERSION)
 
 BUILD_ARGS    := \
@@ -17,8 +17,14 @@ chromium: build.chromium
 build.chromium:
 	podman build $(BUILD_ARGS) --tag=$(CHROMIUM) ./chromium
 
+refresh.chromium:
+	podman build --no-cache $(BUILD_ARGS) --tag=$(CHROMIUM) ./chromium
+
 slack: build.slack
 	./scripts/slack.sh
 
 build.slack:
 	podman build $(BUILD_ARGS) --tag=$(SLACK) ./slack
+
+refresh.slack:
+	podman build --no-cache $(BUILD_ARGS) --tag=$(SLACK) ./slack

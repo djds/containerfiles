@@ -7,7 +7,7 @@ readonly CONFIG_DIRS=(
     "${HOME}/.config/Slack"
     "${HOME}/.config/pulse"
 )
-readonly CONTAINER_IMAGE='ghcr.io/djds/slack:4.19.2'
+readonly CONTAINER_IMAGE='ghcr.io/djds/slack:4.20.0'
 readonly PODMAN_UID='65536'  # id of `chromium` user in rootless container
 
 restore_permissions() {
