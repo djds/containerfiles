@@ -2,8 +2,10 @@
 
 REGISTRY      := ghcr.io/djds
 CHROMIUM      := $(REGISTRY)/chromium:arch
-SLACK_VERSION := 4.20.0
+SLACK_VERSION := 4.21.1
 SLACK         := $(REGISTRY)/slack:$(SLACK_VERSION)
+UNIFI_VERSION := 6.4.54
+UNIFI         := $(REGISTRY)/unifi:$(UNIFI_VERSION)
 
 BUILD_ARGS    := \
 	--build-arg=AUDIO="$(shell getent group audio | cut -d ':' -f 3)" \
@@ -28,3 +30,12 @@ build.slack:
 
 refresh.slack:
 	podman build --no-cache $(BUILD_ARGS) --tag=$(SLACK) ./slack
+
+unifi: build.unifi
+	sudo podman run --rm -it --net=host $(UNIFI)
+
+build.unifi:
+	sudo podman build $(BUILD_ARGS) --tag=$(UNIFI) ./unifi
+
+refresh.unifi:
+	podman build --no-cache $(BUILD_ARGS) --tag=$(UNIFI) ./unifi
