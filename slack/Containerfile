@@ -24,7 +24,7 @@ RUN apt-get update \
 
 ARG SLACK_POLICY="C13BC8A2F6C6FFD4"
 ARG SLACK_PUBKEY="slack_pubkey_20210901.gpg"
-ARG SLACK_VERSION="4.22.0"
+ARG SLACK_VERSION="4.23.0"
 
 RUN mkdir -p \
         "/usr/share/debsig/keyrings/${SLACK_POLICY}" \
