@@ -6,6 +6,7 @@ SLACK_VERSION := 4.23.0
 SLACK         := $(REGISTRY)/slack:$(SLACK_VERSION)
 UNIFI_VERSION := 6.4.54
 UNIFI         := $(REGISTRY)/unifi:$(UNIFI_VERSION)
+ODDIO         := $(REGISTRY)/oddio:latest
 
 BUILD_ARGS    := \
 	--build-arg=AUDIO="$(shell getent group audio | cut -d ':' -f 3)" \
@@ -39,3 +40,12 @@ build.unifi:
 
 refresh.unifi:
 	podman build --no-cache $(BUILD_ARGS) --tag=$(UNIFI) ./unifi
+
+oddio: build.oddio
+	sudo ./scripts/oddio.sh
+
+build.oddio:
+	sudo podman build $(BUILD_ARGS) --tag=$(ODDIO) ./oddio
+
+refresh.oddio:
+	podman build --no-cache $(BUILD_ARGS) --tag=$(ODDIO) ./oddio
