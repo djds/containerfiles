@@ -1,4 +1,4 @@
-FROM docker.io/library/ubuntu:impish
+FROM docker.io/library/ubuntu:jammy
 LABEL maintainer "djds djds@bghost.xyz"
 
 WORKDIR /setup
