@@ -20,7 +20,11 @@ build.chromium:
 	podman build $(BUILD_ARGS) --tag=$(CHROMIUM) ./chromium
 
 refresh.chromium:
-	podman build --no-cache $(BUILD_ARGS) --tag=$(CHROMIUM) ./chromium
+	podman build \
+		--pull \
+		--no-cache $(BUILD_ARGS) \
+		--tag=$(CHROMIUM) \
+		./chromium
 
 slack: build.slack
 	./scripts/slack.sh
@@ -29,7 +33,7 @@ build.slack:
 	podman build $(BUILD_ARGS) --tag=$(SLACK) ./slack
 
 refresh.slack:
-	podman build --no-cache $(BUILD_ARGS) --tag=$(SLACK) ./slack
+	podman build --pull --no-cache $(BUILD_ARGS) --tag=$(SLACK) ./slack
 
 unifi: build.unifi
 	sudo podman run --rm -it --net=host $(UNIFI)
