@@ -1,0 +1,51 @@
+ARG PARENT="docker.io/library/ubuntu:jammy"
+
+FROM "${PARENT}"
+
+LABEL maintainer="djds <djds@bghost.xyz>"
+
+ENV DEBIAN_FRONTEND="noninteractive"
+
+RUN apt-get update \
+    && apt-get dist-upgrade -y \
+    && apt-get install -y --no-install-recommends \
+        ca-certificates \
+        curl \
+        fonts-noto-cjk \
+        fonts-noto-color-emoji \
+        gnupg \
+        libgbm1 \
+        libgl1-mesa-dri \
+        libgl1-mesa-glx \
+    && curl 'https://updates.signal.org/desktop/apt/keys.asc' \
+        | gpg --dearmor >/usr/share/keyrings/signal-desktop-keyring.gpg \
+    && printf "deb [arch=amd64 signed-by=/usr/share/keyrings/signal-desktop-keyring.gpg] https://updates.signal.org/desktop/apt xenial main\n" \
+        >/etc/apt/sources.list.d/signal-xenial.list \
+    && apt update \
+    && apt install -y signal-desktop
+
+ARG GID=10000
+ARG UID=10001
+ARG USERNAME="signal"
+    
+RUN groupadd -g "${GID}" "${USERNAME}" \
+    && mkdir -p "/var/lib/${USERNAME}" \
+    && useradd \
+        -m \
+        -d "/var/lib/${USERNAME}" \
+        -u "${UID}" \
+        -g "${GID}" \
+        -s '/usr/sbin/nologin' \
+        "${USERNAME}" \
+    && chown -R "${USERNAME}:${USERNAME}" "/var/lib/${USERNAME}" \
+    && rm -rf /var/lib/apt/lists/*
+
+VOLUME ["/var/lib/${USERNAME}"]
+
+WORKDIR "/var/lib/${USERNAME}"
+
+USER "${USERNAME}"
+
+ENTRYPOINT ["/usr/bin/signal-desktop"]
+
+# vim:ft=dockerfile
