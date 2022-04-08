@@ -27,7 +27,7 @@ RUN apt-get update \
 ARG GID=10000
 ARG UID=10001
 ARG USERNAME="signal"
-    
+
 RUN groupadd -g "${GID}" "${USERNAME}" \
     && mkdir -p "/var/lib/${USERNAME}" \
     && useradd \
