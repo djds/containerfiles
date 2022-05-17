@@ -64,7 +64,9 @@ chromium() {
         ) \
         --name=chromium \
         "${CONTAINER_IMAGE}" \
-        "${@}"
+            --enable-features=WebUIDarkMode \
+            --force-dark-mode \
+            "${@}"
 }
 
 

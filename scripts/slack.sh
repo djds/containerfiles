@@ -7,7 +7,7 @@ readonly CONFIG_DIRS=(
     "${HOME}/.config/Slack"
     "${HOME}/.config/pulse"
 )
-readonly CONTAINER_IMAGE='ghcr.io/djds/slack:4.23.0'
+readonly CONTAINER_IMAGE='ghcr.io/djds/slack:4.26.1'
 readonly PODMAN_UID='65536'  # id of `chromium` user in rootless container
 
 restore_permissions() {
@@ -38,7 +38,7 @@ slack() {
         --env="PULSE_SERVER=unix:${pulse_socket}" \
         --group-add=keep-groups \
         --net=host \
-        --memory=2048m \
+        --memory=4096m \
         --security-opt=no-new-privileges \
         --security-opt=seccomp="${HOME}/.config/containers/chrome.json" \
         --volume="${HOME}/.config/Slack:/home/slack/.config/Slack:rw" \

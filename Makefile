@@ -2,7 +2,7 @@
 
 REGISTRY      := ghcr.io/djds
 CHROMIUM      := $(REGISTRY)/chromium:arch
-SLACK_VERSION := 4.23.0
+SLACK_VERSION := 4.26.1
 SLACK         := $(REGISTRY)/slack:$(SLACK_VERSION)
 UNIFI_VERSION := 6.4.54
 UNIFI         := $(REGISTRY)/unifi:$(UNIFI_VERSION)

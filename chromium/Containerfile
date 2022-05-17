@@ -24,15 +24,19 @@ RUN groupadd -g "${GID}" "${USERNAME}" \
     && groupmod -g "${AUDIO}" audio \
     && useradd -m -G audio,video,plugdev -u "${ID}" -g "${GID}" "${USERNAME}" \
     && install -m 0700 -d "/home/${USERNAME}/Downloads" \
-    && install -m 0700 -d "/home/${USERNAME}/data" \
+    && install -m 0700 -d "/home/${USERNAME}/.config/gtk-3.0" \
+    && printf "gtk-application-prefer-dark-theme = true\n"  \
+        >"/home/${USERNAME}/.config/gtk-3.0/settings.ini" \
     && chown -R "${USERNAME}:${USERNAME}" "/home/${USERNAME}"
 
-VOLUME ["/home/${USERNAME}/downloads", "/home/${USERNAME}/data"]
+VOLUME ["/home/${USERNAME}/Downloads"]
 
 WORKDIR "/home/${USERNAME}"
 
 # Run as non privileged user
 USER "${USERNAME}"
+
+RUN gsettings set org.gnome.desktop.interface color-scheme prefer-dark
 
 ENTRYPOINT ["/usr/bin/chromium"]
 
