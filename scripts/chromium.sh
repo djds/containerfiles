@@ -35,16 +35,17 @@ chromium() {
 
     xhost "local:${PODMAN_UID}"
 
+#        --security-opt=seccomp="${HOME}/.config/containers/chrome.json" \
     # shellcheck disable=SC2046
     podman --runtime=/usr/bin/crun run --rm -it \
         --cap-drop=all \
+        --security-opt=no-new-privileges \
+        --security-opt=seccomp=unconfined \
         --env="DISPLAY=unix${DISPLAY}" \
-        --env='FONTCONFIG_PATH=/etc/fonts' \
         --env="PULSE_SERVER=unix:${pulse_socket}" \
+        --env='FONTCONFIG_PATH=/etc/fonts' \
         --group-add=keep-groups \
         --net=host \
-        --security-opt=no-new-privileges \
-        --security-opt=seccomp="${HOME}/.config/containers/chrome.json" \
         --volume="${HOME}/.config/chromium:/home/chromium/.config/chromium:rw" \
         --volume="${HOME}/.config/pulse:/home/chromium/.config/pulse:rw" \
         --volume="${HOME}/.pki:/home/chromium/.pki:rw" \
@@ -67,6 +68,7 @@ chromium() {
             --enable-features=WebUIDarkMode \
             --force-dark-mode \
             "${@}"
+#            --enable-logging=stderr --v=1 \
 }
 
 
