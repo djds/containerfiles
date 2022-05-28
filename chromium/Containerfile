@@ -12,6 +12,7 @@ RUN pacman-key --init \
         vulkan-intel \
         vulkan-mesa-layers \
         libva-mesa-driver \
+        wayland \
     && pacman -Scc --noconfirm
 
 ARG GID
