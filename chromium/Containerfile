@@ -1,5 +1,5 @@
 FROM docker.io/library/archlinux:latest
-LABEL maintainer "djds djds@bghost.xyz"
+LABEL maintainer "djds <djds@bghost.xyz>"
 
 RUN pacman-key --init \
     && pacman -Syu --noconfirm \
@@ -10,24 +10,25 @@ RUN pacman-key --init \
         noto-fonts-emoji \
         mesa \
         vulkan-intel \
+        vulkan-mesa-layers \
         libva-mesa-driver \
     && pacman -Scc --noconfirm
 
 ARG GID
 ARG PLUGDEV
-ARG ID
+ARG UID
 ARG AUDIO
 ARG USERNAME="chromium"
 
 RUN groupadd -g "${GID}" "${USERNAME}" \
     && groupadd -g "${PLUGDEV}" plugdev \
     && groupmod -g "${AUDIO}" audio \
-    && useradd -m -G audio,video,plugdev -u "${ID}" -g "${GID}" "${USERNAME}" \
+    && useradd -m -G audio,video,plugdev -u "${UID}" -g "${GID}" "${USERNAME}" \
     && install -m 0700 -d "/home/${USERNAME}/Downloads" \
-    && install -m 0700 -d "/home/${USERNAME}/data" \
+    && install -m 0700 -d "/home/${USERNAME}/.config/chromium" \
     && chown -R "${USERNAME}:${USERNAME}" "/home/${USERNAME}"
 
-VOLUME ["/home/${USERNAME}/downloads", "/home/${USERNAME}/data"]
+VOLUME ["/home/${USERNAME}/Downloads", "/home/${USERNAME}/.config/chromium"]
 
 WORKDIR "/home/${USERNAME}"
 
