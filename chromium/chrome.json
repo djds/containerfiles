@@ -2,21 +2,6 @@
   "defaultAction": "SCMP_ACT_ERRNO",
   "syscalls": [
     {
-      "name": "_llseek",
-      "action": "SCMP_ACT_ALLOW",
-      "args": null
-    },
-    {
-      "name": "_newselect",
-      "action": "SCMP_ACT_ALLOW",
-      "args": null
-    },
-    {
-      "name": "a",
-      "action": "SCMP_ACT_ALLOW",
-      "args": null
-    },
-    {
       "name": "accept",
       "action": "SCMP_ACT_ALLOW",
       "args": null
@@ -48,11 +33,6 @@
     },
     {
       "name": "brk",
-      "action": "SCMP_ACT_ALLOW",
-      "args": null
-    },
-    {
-      "name": "call",
       "action": "SCMP_ACT_ALLOW",
       "args": null
     },
@@ -217,6 +197,11 @@
       "args": null
     },
     {
+      "name": "faccessat2",
+      "action": "SCMP_ACT_ALLOW",
+      "args": null
+    },
+    {
       "name": "fadvise64",
       "action": "SCMP_ACT_ALLOW",
       "args": null
@@ -302,11 +287,6 @@
       "args": null
     },
     {
-      "name": "for",
-      "action": "SCMP_ACT_ALLOW",
-      "args": null
-    },
-    {
       "name": "fork",
       "action": "SCMP_ACT_ALLOW",
       "args": null
@@ -368,16 +348,6 @@
     },
     {
       "name": "futimesat",
-      "action": "SCMP_ACT_ALLOW",
-      "args": null
-    },
-    {
-      "name": "get_robust_list",
-      "action": "SCMP_ACT_ALLOW",
-      "args": null
-    },
-    {
-      "name": "get_thread_area",
       "action": "SCMP_ACT_ALLOW",
       "args": null
     },
@@ -507,6 +477,11 @@
       "args": null
     },
     {
+      "name": "get_robust_list",
+      "action": "SCMP_ACT_ALLOW",
+      "args": null
+    },
+    {
       "name": "getrusage",
       "action": "SCMP_ACT_ALLOW",
       "args": null
@@ -523,6 +498,11 @@
     },
     {
       "name": "getsockopt",
+      "action": "SCMP_ACT_ALLOW",
+      "args": null
+    },
+    {
+      "name": "get_thread_area",
       "action": "SCMP_ACT_ALLOW",
       "args": null
     },
@@ -577,6 +557,11 @@
       "args": null
     },
     {
+      "name": "ioctl",
+      "action": "SCMP_ACT_ALLOW",
+      "args": null
+    },
+    {
       "name": "io_destroy",
       "action": "SCMP_ACT_ALLOW",
       "args": null
@@ -587,27 +572,22 @@
       "args": null
     },
     {
-      "name": "io_setup",
-      "action": "SCMP_ACT_ALLOW",
-      "args": null
-    },
-    {
-      "name": "io_submit",
-      "action": "SCMP_ACT_ALLOW",
-      "args": null
-    },
-    {
-      "name": "ioctl",
-      "action": "SCMP_ACT_ALLOW",
-      "args": null
-    },
-    {
       "name": "ioprio_get",
       "action": "SCMP_ACT_ALLOW",
       "args": null
     },
     {
       "name": "ioprio_set",
+      "action": "SCMP_ACT_ALLOW",
+      "args": null
+    },
+    {
+      "name": "io_setup",
+      "action": "SCMP_ACT_ALLOW",
+      "args": null
+    },
+    {
+      "name": "io_submit",
       "action": "SCMP_ACT_ALLOW",
       "args": null
     },
@@ -658,6 +638,11 @@
     },
     {
       "name": "llistxattr",
+      "action": "SCMP_ACT_ALLOW",
+      "args": null
+    },
+    {
+      "name": "_llseek",
       "action": "SCMP_ACT_ALLOW",
       "args": null
     },
@@ -837,7 +822,7 @@
       "args": null
     },
     {
-      "name": "on",
+      "name": "_newselect",
       "action": "SCMP_ACT_ALLOW",
       "args": null
     },
@@ -868,11 +853,6 @@
     },
     {
       "name": "pipe2",
-      "action": "SCMP_ACT_ALLOW",
-      "args": null
-    },
-    {
-      "name": "pkey_alloc",
       "action": "SCMP_ACT_ALLOW",
       "args": null
     },
@@ -987,17 +967,7 @@
       "args": null
     },
     {
-      "name": "restart_syscall",
-      "action": "SCMP_ACT_ALLOW",
-      "args": null
-    },
-    {
       "name": "rmdir",
-      "action": "SCMP_ACT_ALLOW",
-      "args": null
-    },
-    {
-      "name": "rseq",
       "action": "SCMP_ACT_ALLOW",
       "args": null
     },
@@ -1042,16 +1012,6 @@
       "args": null
     },
     {
-      "name": "sched_get_priority_max",
-      "action": "SCMP_ACT_ALLOW",
-      "args": null
-    },
-    {
-      "name": "sched_get_priority_min",
-      "action": "SCMP_ACT_ALLOW",
-      "args": null
-    },
-    {
       "name": "sched_getaffinity",
       "action": "SCMP_ACT_ALLOW",
       "args": null
@@ -1063,6 +1023,16 @@
     },
     {
       "name": "sched_getparam",
+      "action": "SCMP_ACT_ALLOW",
+      "args": null
+    },
+    {
+      "name": "sched_get_priority_max",
+      "action": "SCMP_ACT_ALLOW",
+      "args": null
+    },
+    {
+      "name": "sched_get_priority_min",
       "action": "SCMP_ACT_ALLOW",
       "args": null
     },
@@ -1153,21 +1123,6 @@
     },
     {
       "name": "sendto",
-      "action": "SCMP_ACT_ALLOW",
-      "args": null
-    },
-    {
-      "name": "set_robust_list",
-      "action": "SCMP_ACT_ALLOW",
-      "args": null
-    },
-    {
-      "name": "set_thread_area",
-      "action": "SCMP_ACT_ALLOW",
-      "args": null
-    },
-    {
-      "name": "set_tid_address",
       "action": "SCMP_ACT_ALLOW",
       "args": null
     },
@@ -1287,12 +1242,27 @@
       "args": null
     },
     {
+      "name": "set_robust_list",
+      "action": "SCMP_ACT_ALLOW",
+      "args": null
+    },
+    {
       "name": "setsid",
       "action": "SCMP_ACT_ALLOW",
       "args": null
     },
     {
       "name": "setsockopt",
+      "action": "SCMP_ACT_ALLOW",
+      "args": null
+    },
+    {
+      "name": "set_thread_area",
+      "action": "SCMP_ACT_ALLOW",
+      "args": null
+    },
+    {
+      "name": "set_tid_address",
       "action": "SCMP_ACT_ALLOW",
       "args": null
     },
@@ -1382,12 +1352,12 @@
       "args": null
     },
     {
-      "name": "statfs64",
+      "name": "statx",
       "action": "SCMP_ACT_ALLOW",
       "args": null
     },
     {
-      "name": "statx",
+      "name": "statfs64",
       "action": "SCMP_ACT_ALLOW",
       "args": null
     },
@@ -1427,11 +1397,6 @@
       "args": null
     },
     {
-      "name": "t",
-      "action": "SCMP_ACT_ALLOW",
-      "args": null
-    },
-    {
       "name": "tee",
       "action": "SCMP_ACT_ALLOW",
       "args": null
@@ -1457,21 +1422,6 @@
       "args": null
     },
     {
-      "name": "timer_getoverrun",
-      "action": "SCMP_ACT_ALLOW",
-      "args": null
-    },
-    {
-      "name": "timer_gettime",
-      "action": "SCMP_ACT_ALLOW",
-      "args": null
-    },
-    {
-      "name": "timer_settime",
-      "action": "SCMP_ACT_ALLOW",
-      "args": null
-    },
-    {
       "name": "timerfd_create",
       "action": "SCMP_ACT_ALLOW",
       "args": null
@@ -1483,6 +1433,21 @@
     },
     {
       "name": "timerfd_settime",
+      "action": "SCMP_ACT_ALLOW",
+      "args": null
+    },
+    {
+      "name": "timer_getoverrun",
+      "action": "SCMP_ACT_ALLOW",
+      "args": null
+    },
+    {
+      "name": "timer_gettime",
+      "action": "SCMP_ACT_ALLOW",
+      "args": null
+    },
+    {
+      "name": "timer_settime",
       "action": "SCMP_ACT_ALLOW",
       "args": null
     },

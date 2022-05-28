@@ -35,12 +35,11 @@ chromium() {
 
     xhost "local:${PODMAN_UID}"
 
-#        --security-opt=seccomp="${HOME}/.config/containers/chrome.json" \
     # shellcheck disable=SC2046
     podman --runtime=/usr/bin/crun run --rm -it \
         --cap-drop=all \
         --security-opt=no-new-privileges \
-        --security-opt=seccomp=unconfined \
+        --security-opt=seccomp="${HOME}/.config/containers/chrome.json" \
         --env="DISPLAY=unix${DISPLAY}" \
         --env="PULSE_SERVER=unix:${pulse_socket}" \
         --env='FONTCONFIG_PATH=/etc/fonts' \
