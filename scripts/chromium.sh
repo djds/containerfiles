@@ -5,7 +5,6 @@ set -exuo pipefail
 readonly SUDO='/usr/bin/sudo'
 readonly CONFIG_DIRS=(
     "${HOME}/.config/chromium"
-    "${HOME}/.config/pulse"
 )
 readonly CONTAINER_IMAGE='ghcr.io/djds/chromium:arch'
 readonly PODMAN_UID='65536'  # id of `chromium` user in rootless container
@@ -16,7 +15,6 @@ restore_permissions() {
 
 chromium() { 
     local -r downloads='/tmp/downloads'
-    local -r pulse_socket='/run/pulse/native'
 
     local devices=(
         '/dev/snd'
@@ -39,16 +37,13 @@ chromium() {
         --cap-drop=all \
         --env="DISPLAY=unix${DISPLAY}" \
         --env='FONTCONFIG_PATH=/etc/fonts' \
-        --env="PULSE_SERVER=unix:${pulse_socket}" \
         --group-add=keep-groups \
         --net=host \
         --security-opt=no-new-privileges \
         --security-opt=seccomp="${HOME}/.config/containers/chrome.json" \
         --volume="${HOME}/.config/chromium:/home/chromium/.config/chromium:rw" \
-        --volume="${HOME}/.config/pulse:/home/chromium/.config/pulse:rw" \
         --volume="${HOME}/.pki:/home/chromium/.pki:rw" \
         --volume="${downloads}:/home/chromium/Downloads:rw" \
-        --volume="/run/user/${UID}/pulse/native:${pulse_socket}:rw" \
         --volume='/dev/shm:/dev/shm:rw' \
         --volume='/etc/hosts:/etc/hosts:ro' \
         --volume='/etc/localtime:/etc/localtime:ro' \
@@ -63,6 +58,7 @@ chromium() {
         ) \
         --name=chromium \
         "${CONTAINER_IMAGE}" \
+        --force-device-scale-factor=1.3 \
         "${@}"
 }
 
