@@ -61,7 +61,6 @@ chromium() {
             done
         ) \
         --name=chromium \
-        --entrypoint=bash \
         "${CONTAINER_IMAGE}" \
             --enable-features=UseOzonePlatform \
             --ozone-platform=wayland \
